@@ -1,8 +1,8 @@
-# Monitoring Stack Setup on POC Cluster (`poc-odooswfjips`)
+# Monitoring Stack Setup on POC Cluster (`poc**************s`)
 
 ## Overview
 
-This document provides a comprehensive guide to the monitoring stack setup for the POC cluster (`poc-odooswfjips`), designed to monitor applications running in the `odoo`, `keycloak`, and `jips` namespaces. The stack leverages industry-standard tools such as Prometheus, Loki, Tempo, and OpenTelemetry to provide metrics collection, log aggregation, distributed tracing, and alerting capabilities. The deployment follows a dynamic provisioning approach for storage, ensuring scalability and ease of maintenance. The setup is automated using a Bash script (`deploy.sh`) and Helm charts, with configurations templated for flexibility across environments.
+This document provides a comprehensive guide to the monitoring stack setup for the POC cluster (`po***************ps`), designed to monitor applications running in the `odoo`, `keycloak`, and `jips` namespaces. The stack leverages industry-standard tools such as Prometheus, Loki, Tempo, and OpenTelemetry to provide metrics collection, log aggregation, distributed tracing, and alerting capabilities. The deployment follows a dynamic provisioning approach for storage, ensuring scalability and ease of maintenance. The setup is automated using a Bash script (`deploy.sh`) and Helm charts, with configurations templated for flexibility across environments.
 
 ### Objectives
 - Monitor system and application metrics for services in `odoo`, `keycloak`, and `jips` namespaces.
@@ -34,7 +34,7 @@ The monitoring stack consists of several interconnected components deployed in t
    - **Role**: Log aggregation and querying.
    - **What It Does**: Collects logs from all pods in the monitored namespaces using Promtail, stores them, and provides a query interface.
    - **What It Tracks**: Application logs, Kubernetes events, and container logs, with labels for namespaces (`odoo`, `keycloak`, `jips`).
-   - **Integration**: Logs are ingested via Promtail, stored in Loki, and can be queried via HTTP endpoints (e.g., `http://dev-poc-odooswfjips-loki.jips.io`).
+   - **Integration**: Logs are ingested via Promtail, stored in Loki, and can be queried via HTTP endpoints (e.g., `ht********************************************.io`).
 
 4. **Promtail**:
    - **Role**: Log collection agent for Loki.
@@ -46,7 +46,7 @@ The monitoring stack consists of several interconnected components deployed in t
    - **Role**: Distributed tracing.
    - **What It Does**: Collects traces via OTLP (OpenTelemetry Protocol), stores them, and provides a query interface for trace analysis.
    - **What It Tracks**: Request traces across services, including latency, errors, and dependencies.
-   - **Integration**: Receives traces from OpenTelemetry Collector, accessible via `http://dev-poc-odooswfjips-tempo.jips.io`.
+   - **Integration**: Receives traces from OpenTelemetry Collector, accessible via `h******************************************io`.
 
 6. **OpenTelemetry Operator and Collector**:
    - **Role**: Instrumentation and trace/log collection.
@@ -56,7 +56,7 @@ The monitoring stack consists of several interconnected components deployed in t
 
 7. **Postgres Exporter**:
    - **Role**: Database metrics collection.
-   - **What It Does**: Scrapes metrics from a PostgreSQL database (at `172.16.16.12:5432`) and exposes them for Prometheus.
+   - **What It Does**: Scrapes metrics from a PostgreSQL database (at `1******************2`) and exposes them for Prometheus.
    - **What It Tracks**: Database performance metrics (e.g., query latency, connection counts).
    - **Integration**: Metrics are scraped by Prometheus via a ServiceMonitor.
 
@@ -70,7 +70,7 @@ The monitoring stack consists of several interconnected components deployed in t
    - **Role**: TLS certificate management.
    - **What It Does**: Automatically provisions and renews TLS certificates for Ingress resources using Let’s Encrypt.
    - **What It Tracks**: N/A (infrastructure component).
-   - **Integration**: Provides certificates for secure access to monitoring endpoints (e.g., `dev-poc-odooswfjips-prometheus.jips.io`).
+   - **Integration**: Provides certificates for secure access to monitoring endpoints (e.g., `de*************************************io`).
 
 ### Workflow and Data Flow
 1. **Metrics Collection**:
@@ -89,7 +89,7 @@ The monitoring stack consists of several interconnected components deployed in t
    - Tempo stores traces and provides a query interface for debugging.
 
 4. **External Access**:
-   - NGINX Ingress Controller routes traffic to Prometheus, Loki, and Tempo using domain names (e.g., `dev-poc-odooswfjips-loki.jips.io`).
+   - NGINX Ingress Controller routes traffic to Prometheus, Loki, and Tempo using domain names (e.g., `de*****************************************.io`).
    - Cert-Manager ensures secure TLS connections.
 
 ---
@@ -97,7 +97,7 @@ The monitoring stack consists of several interconnected components deployed in t
 ## Implementation Details
 
 ### Environment Configuration
-The deployment uses environment-specific configurations defined in `environments/dev/poc-odooswfjips.env`:
+The deployment uses environment-specific configurations defined in `environments/dev/poc-************env`:
 - `ENV_NAME="dev"`, `CLUSTER_NAME="poc-odooswfjips"`, `DNS_DOMAIN="jips.io"`.
 - Storage sizes: `PROMETHEUS_STORAGE_SIZE="35Gi"`, `LOKI_STORAGE_SIZE="10Gi"`, `ALERTMANAGER_STORAGE_SIZE="2Gi"`, `TEMPO_STORAGE_SIZE="10Gi"`.
 - Resource limits and requests for all components (e.g., Prometheus CPU: 100m-500m, Memory: 1.9Gi).
@@ -135,14 +135,14 @@ The deployment is automated using `deploy.sh`, which performs the following step
   - Disables unnecessary components (e.g., `kubeEtcd`, `kubeControllerManager`).
   - Enables Prometheus features like `exemplar-storage`.
   - Configures dynamic storage for Prometheus and Alertmanager using `volumeClaimTemplate`.
-  - Sets up Ingress for Prometheus (`dev-poc-odooswfjips-prometheus.jips.io`) with TLS.
+  - Sets up Ingress for Prometheus (`dev******************************o`) with TLS.
   - Configures Alertmanager to send notifications to Slack, ignoring `InfoInhibitor` and `Watchdog` alerts.
   - Defines resource limits/requests for Prometheus, Alertmanager, and Node Exporter.
 
 #### `loki-values.yaml`
 - **Purpose**: Configures the `loki-stack` chart.
 - **Key Settings**:
-  - Enables Ingress for Loki (`dev-poc-odooswfjips-loki.jips.io`) with TLS.
+  - Enables Ingress for Loki (`dev*******************o`) with TLS.
   - Configures dynamic storage using `volumeClaimTemplate`.
   - Sets retention period to 30 days and enables compaction.
   - Configures Promtail to collect logs from all namespaces, parse JSON logs, and drop noisy health check logs.
@@ -172,7 +172,7 @@ The deployment is automated using `deploy.sh`, which performs the following step
 #### `postgres-exporter.yaml` and `postgres-exporter-secret.yml`
 - **Purpose**: Deploys Postgres Exporter to monitor a PostgreSQL database.
 - **Key Settings**:
-  - Connects to the database at `172.16.16.12:5432` using credentials stored in a Secret.
+  - Connects to the database at `17**************32` using credentials stored in a Secret.
   - Exposes metrics on port 9187 for Prometheus to scrape.
 
 #### `service-monitors.yaml`
@@ -184,7 +184,7 @@ The deployment is automated using `deploy.sh`, which performs the following step
 #### `tempo-ingress.yaml`
 - **Purpose**: Configures Ingress for Tempo.
 - **Key Settings**:
-  - Routes traffic to `dev-poc-odooswfjips-tempo.jips.io` with TLS enabled.
+  - Routes traffic to `d********************io` with TLS enabled.
 
 #### `cluster-issuer.yaml`
 - **Purpose**: Sets up a ClusterIssuer for cert-manager.
@@ -201,7 +201,7 @@ The deployment is automated using `deploy.sh`, which performs the following step
   - Kubernetes cluster metrics: Pod status, API server performance.
   - Application metrics: HTTP request rates, error rates, latency (via OpenTelemetry Collector).
   - Database metrics: PostgreSQL query performance, connection counts (via Postgres Exporter).
-- **Access**: Metrics are queryable at `https://dev-poc-odooswfjips-prometheus.jips.io`.
+- **Access**: Metrics are queryable at `https://***********************************.io`.
 
 ### Logs (Loki)
 - **What’s Tracked**:
@@ -227,7 +227,7 @@ The deployment is automated using `deploy.sh`, which performs the following step
 ## Deployment Workflow
 
 1. **Prerequisites**:
-   - Kubernetes cluster (`poc-odooswfjips`) with Helm installed.
+   - Kubernetes cluster (`poc-od*******`) with Helm installed.
    - Scaleway CSI driver for dynamic storage provisioning (`sbs-default` storage class).
    - Access to the `odoo`, `keycloak`, and `jips` namespaces.
 
