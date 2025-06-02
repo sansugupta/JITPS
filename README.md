@@ -208,13 +208,13 @@ The deployment is automated using `deploy.sh`, which performs the following step
   - Container logs from all pods in `odoo`, `keycloak`, and `jips` namespaces.
   - Parsed JSON logs with fields like `level`, `message`, `traceID`, and `stack_trace`.
   - Labels: `namespace`, `team`, `environment`.
-- **Access**: Logs are queryable at `https://dev-poc-odooswfjips-loki.jips.io`.
+- **Access**: Logs are queryable at `httpp***********.io`.
 
 ### Traces (Tempo)
 - **What’s Tracked**:
   - Distributed traces for requests across services in `odoo`, `keycloak`, and `jips`.
   - Span data including latency, errors, and service dependencies.
-- **Access**: Traces are queryable at `https://dev-poc-odooswfjips-tempo.jips.io`.
+- **Access**: Traces are queryable at `https:p***********ps.io`.
 
 ### Alerts (Alertmanager)
 - **What’s Tracked**:
@@ -238,11 +238,11 @@ The deployment is automated using `deploy.sh`, which performs the following step
    ```
 
 3. **Set Up Environment**:
-   - Ensure the `environments/dev/poc-odooswfjips.env` file is configured with the correct values.
+   - Ensure the `environments/dev/poc-*************.env` file is configured with the correct values.
 
 4. **Run the Deployment Script**:
    ```bash
-   bash ./base/scripts/deploy.sh dev poc-odooswfjips
+   bash ./base/scripts/deploy.sh dev p*************s
    ```
 
 5. **Verify the Deployment**:
@@ -270,6 +270,6 @@ The deployment is automated using `deploy.sh`, which performs the following step
 
 ## Conclusion
 
-The monitoring stack on the `poc-odooswfjips` cluster provides a robust solution for observability, covering metrics, logs, traces, and alerts. The dynamic provisioning approach simplifies storage management, while the automated deployment script ensures consistency and repeatability. The stack is now fully operational, monitoring applications in the `odoo`, `keycloak`, and `jips` namespaces, with secure external access via Ingress and TLS.
+The monitoring stack on the `po*************ps` cluster provides a robust solution for observability, covering metrics, logs, traces, and alerts. The dynamic provisioning approach simplifies storage management, while the automated deployment script ensures consistency and repeatability. The stack is now fully operational, monitoring applications in the `odoo`, `keycloak`, and `jips` namespaces, with secure external access via Ingress and TLS.
 
-For further assistance, contact the JIPS SRE Team - Sanskar Gupta (Sanskar.gupta@alyssum.global).
+For further assistance, contact the JIPS SRE Team - Sanskar Gupta (Sanskargupta966@gmail).
